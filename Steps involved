@@ -1,0 +1,12 @@
+# Extract
+tar -xzf rhel_patching_ansible.tar.gz && cd rhel_patching
+
+# Dry run first
+ansible-playbook -i inventory/hosts.ini playbooks/patch_dryrun.yml
+
+# Apply security patches wave-by-wave
+ansible-playbook -i inventory/hosts.ini playbooks/patch_all_waves.yml
+
+# Emergency CVE patch on prod only
+ansible-playbook -i inventory/hosts.ini playbooks/patch_security.yml -l production \
+  -e '{"patch_advisory_ids":["RHSA-2024:1234"]}'
