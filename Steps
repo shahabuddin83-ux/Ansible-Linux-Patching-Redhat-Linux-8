@@ -1,0 +1,34 @@
+Here's your complete Ansible RHEL patching automation suite — 20 files in a production-ready role structure.
+What's Included
+4 Playbooks
+Playbook
+Purpose
+patch_all_waves.yml
+Full wave-based rollout: Dev → Staging → Production
+patch_security.yml
+Security/CVE-targeted patches, emergency use
+patch_dryrun.yml
+Check what would be patched — no changes applied
+patch_rollback.yml
+Rollback via dnf history undo with reboot
+Role Tasks (5 stages)
+Stage
+What Happens
+Preflight
+OS check, disk space, DNF lock, repo connectivity, maintenance window
+Pre-patch
+Save package list, record running services, count updates, notify Slack/email
+Patch
+dnf update (security/all/bugfix/advisory), kernel detection, smart reboot
+Post-patch
+Service health, failed units, disk/memory check, package diff, remaining CVEs
+Report
+HTML + text reports saved on host and fetched to controller
+Key Features
+Wave-based serial rollout — stops if failure threshold exceeded (max_fail_percentage)
+Kernel-aware reboot — only reboots when kernel actually changed
+Maintenance window enforcement — configurable time gate for production
+Rollback by DNF history — undo last or specific transaction ID
+Package diff logging — exact before/after package comparison
+Slack & email notifications — start + completion hooks
+Per-environment vars — group_vars/production.yml vs group_vars/dev.yml
